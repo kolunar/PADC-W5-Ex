@@ -7,13 +7,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.padc.aml.attractioninmyanmar.AttractionApp;
 import com.padc.aml.attractioninmyanmar.R;
 import com.padc.aml.attractioninmyanmar.data.vos.AttractionVO;
 import com.padc.aml.attractioninmyanmar.fragments.AttractionFragment;
@@ -27,6 +30,14 @@ public class AttractionActivity extends AppCompatActivity implements AttractionF
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        /*
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+        */
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +48,7 @@ public class AttractionActivity extends AppCompatActivity implements AttractionF
         });
 
         if (savedInstanceState == null) {
+            Toast.makeText(AttractionApp.getContext(), "AttractionActivity::onCreate::savedInstanceState", Toast.LENGTH_SHORT).show();
             AttractionFragment fragment = AttractionFragment.newInstance();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fl_container, fragment)

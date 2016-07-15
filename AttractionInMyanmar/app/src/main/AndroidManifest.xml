@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.padc.aml.attractioninmyanmar">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".AttractionApp"
         android:allowBackup="true"

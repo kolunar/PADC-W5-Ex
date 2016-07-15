@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,7 @@ import com.padc.aml.attractioninmyanmar.AttractionApp;
 import com.padc.aml.attractioninmyanmar.R;
 import com.padc.aml.attractioninmyanmar.data.models.AttractionModel;
 import com.padc.aml.attractioninmyanmar.data.vos.AttractionVO;
+import com.padc.aml.attractioninmyanmar.utils.AttractionConstants;
 
 public class AttractionDetailActivity extends AppCompatActivity {
 
@@ -61,7 +63,7 @@ public class AttractionDetailActivity extends AppCompatActivity {
 
         String attractionTitle = getIntent().getStringExtra(IE_EVENT_TITLE);
 
-        AttractionVO attraction = AttractionModel.getInstance().getAttractionByTitle(attractionTitle);
+        final AttractionVO attraction = AttractionModel.getInstance().getAttractionByTitle(attractionTitle);
         if(attraction == null) {
             throw new RuntimeException("Can't find Attraction obj with the title : "+attractionTitle);
         } else {
@@ -78,6 +80,20 @@ public class AttractionDetailActivity extends AppCompatActivity {
                     .placeholder(R.drawable.drawer_background)
                     .into(ivAttractionPhoto);
         }
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_sharing);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String imageUrl = AttractionConstants.IMAGE_ROOT_DIR + attraction.getDefaultImage();
+                startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(AttractionDetailActivity.this)
+                        .setType("text/plain")
+                        .setText(attraction.getAttractionTitle() + " - " + imageUrl)
+                        .getIntent(), getString(R.string.action_share)));
+/*                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+            }
+        });
     }
 
 

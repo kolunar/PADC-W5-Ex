@@ -12,7 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.padc.aml.attractioninmyanmar.AttractionApp;
 import com.padc.aml.attractioninmyanmar.R;
 import com.padc.aml.attractioninmyanmar.adapters.AttractionAdapter;
 import com.padc.aml.attractioninmyanmar.data.models.AttractionModel;
@@ -40,15 +42,16 @@ public class AttractionFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAttractionAdapter = new AttractionAdapter(AttractionModel.getInstance().getAttractionList(), mAttractionItemController);
+        Toast.makeText(AttractionApp.getContext(), "AttractionFragment::onCreate::Size:"+mAttractionAdapter.getItemCount(), Toast.LENGTH_LONG).show();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Toast.makeText(AttractionApp.getContext(), "AttractionFragment::onCreateView", Toast.LENGTH_LONG).show();
         View view = inflater.inflate(R.layout.fragment_attraction, container, false);
 
         RecyclerView rvAttraction = (RecyclerView) view.findViewById(R.id.rv_Attractions);
-        rvAttraction.setAdapter(mAttractionAdapter);
         rvAttraction.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
         final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
@@ -63,7 +66,8 @@ public class AttractionFragment extends Fragment {
                 }, 3000);
             }
         });
-
+        rvAttraction.setAdapter(mAttractionAdapter);
+        Toast.makeText(AttractionApp.getContext(), "AttractionFragment::onCreateView::Size:"+mAttractionAdapter.getItemCount(), Toast.LENGTH_LONG).show();
         return view;
     }
 
